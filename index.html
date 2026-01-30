@@ -14,14 +14,22 @@
       
         function ChatInput() {
             return (   
-                <div>  {/* Wrapping input and button, since return only returns one element(thing)*/}
-                    <input /> {/*shortcut: <input></input>*/}
+                <>  { /* Fragments */ }
+                    <input /> 
                     <button>Send</button>
-                </div>
+                </>
             );
         }
 
-        ReactDOM.createRoot(document.querySelector(".root")).render(<ChatInput />);
+        const App = () => {
+            return (
+                <>  { /* Fragments */ } 
+                    <ChatInput />
+                </>
+            );
+        }
+
+        ReactDOM.createRoot(document.querySelector(".root")).render(<App />);
     </script>
   </body>
 </html>
