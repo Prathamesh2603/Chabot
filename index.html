@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>React Basics</title>
+    <title>Chatbot</title>
   </head>
   <body>
     <div class="root"></div>
@@ -11,8 +11,17 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-      const button = <button>React BTN</button>
-      ReactDOM.createRoot(document.querySelector(".root")).render(button);
+      
+        function ChatInput() {
+            return (   
+                <div>  {/* Wrapping input and button, since return only returns one element(thing)*/}
+                    <input /> {/*shortcut: <input></input>*/}
+                    <button>Send</button>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.querySelector(".root")).render(<ChatInput />);
     </script>
   </body>
 </html>
