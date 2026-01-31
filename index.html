@@ -15,29 +15,25 @@
         function ChatInput() {    
             return (   
                 <> 
-                    <input /> 
+                    <input 
+                        placeholder="Send message to chatbot" 
+                        size="30"
+                    /> 
                     <button>Send</button>
                 </>
             );
         }
 
         function ChatMessage({ message, sender }) { 
-
-            /*if (sender === "robot") {
-                return (
-                    <div>
-                        <img src="robot.jpg" alt="robot" height = "50" />
-                        {message}
-                    </div>
-                );
-            }*/
-
             return (
                 <div>
-                    {/* shortcut for if-statement: Guard operator(&&) */}
-                    {sender === "robot" && <img src="robot.jpg" alt="robot" height = "50" />} {/* sender is robot */}
+                    {sender === "robot" && (
+                        <img src="robot.jpg" alt="robot" height = "50" />
+                    )} {/* sender is robot */}
                     {message}
-                    {sender === "user" && <img src="user.jpg" alt="user" height = "50" />}  {/* sender is user */} 
+                    {sender === "user" && (
+                        <img src="user.jpg" alt="user" height = "50" />
+                    )}  {/* sender is user */} 
                 </div>
             );
         }
@@ -46,8 +42,14 @@
             return (
                 <> 
                     <ChatInput />
-                    <ChatMessage message = "hello chatbot" sender="user"/>
-                    <ChatMessage message = "Hello! how can i help you" sender="robot"/>
+                    <ChatMessage 
+                        message = "hello chatbot" 
+                        sender="user"
+                    />
+                    <ChatMessage 
+                        message = "Hello! how can i help you" 
+                        sender="robot"
+                    />
                 </>
             );
         }
