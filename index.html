@@ -23,30 +23,30 @@
                 setInputText(e.target.value);  
             }
 
-            // Problem:- User text is not displayed only chatbot's did. why?
-            // Answer:- In react state is not updated immediately. It's updated after all the code is finished.
             function sendMessage() {
-                // So, here the chatMessages is not updated immediately...
-                setChatMessages([    // with this new array      
-                    ...chatMessages,   
-                    {   // users new chatmessage
-                        message: inputText,  
+                // Solution:-
+                const newChatMessages = [  // Saving old msg array & new user's msg in variable
+                    ...chatMessages,   // Old Array
+                    {   
+                        message: inputText,  // User's Message
                         sender: "user",
                         id: crypto.randomUUID()  
                     }
-                ]);
+                ]
+
+                setChatMessages(newChatMessages); // setting chatMessages with new var.
 
                 setInputText("");  
 
                 const response = Chatbot.getResponse(inputText);
                 setChatMessages([     
-                    ...chatMessages,  // When it reaches here, chatMessage is still the old array without the users new input.
-                    {   // so old array with this new chatbot response is added to the inputText state & user's chatmessage is lost.              
-                        message: response,  
+                    ...newChatMessages,  // Instead of adding old array, new var is added which contains user's chat msg
+                    {                
+                        message: response,  // To that it will add the chatbot response
                         sender: "robot",
                         id: crypto.randomUUID()  
                     }
-                ]);  // Code finishes here
+                ]); 
             }
 
             return (   
