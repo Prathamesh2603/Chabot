@@ -8,28 +8,45 @@
 
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    
+    <!-- Loading another library for a response from chatbot -->
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
       
         function ChatInput({chatMessages, setChatMessages}) {   
-            const [inputText, setInputText] = React.useState(""); // initial value is empty
+            const [inputText, setInputText] = React.useState(""); 
 
             function saveInputText(e) {
-                setInputText(e.target.value);  // Taking value and saving it in inputText
+                setInputText(e.target.value);  
             }
 
+            // Problem:- User text is not displayed only chatbot's did. why?
+            // Answer:- In react state is not updated immediately. It's updated after all the code is finished.
             function sendMessage() {
-                setChatMessages([     
+                // So, here the chatMessages is not updated immediately...
+                setChatMessages([    // with this new array      
                     ...chatMessages,   
-                    {                  
-                        message: inputText,  // which contains input value
+                    {   // users new chatmessage
+                        message: inputText,  
                         sender: "user",
                         id: crypto.randomUUID()  
                     }
                 ]);
 
-                setInputText("");  // It will empty the state(input) 
+                setInputText("");  
+
+                const response = Chatbot.getResponse(inputText);
+                setChatMessages([     
+                    ...chatMessages,  // When it reaches here, chatMessage is still the old array without the users new input.
+                    {   // so old array with this new chatbot response is added to the inputText state & user's chatmessage is lost.              
+                        message: response,  
+                        sender: "robot",
+                        id: crypto.randomUUID()  
+                    }
+                ]);  // Code finishes here
             }
 
             return (   
@@ -37,7 +54,7 @@
                     <input 
                         placeholder = "Send message to chatbot" 
                         size = "30"
-                        onChange = {saveInputText} // if there any changes in input saveInputText func runs.
+                        onChange = {saveInputText} 
                         value = {inputText}
                     /> 
                     <button
@@ -77,10 +94,9 @@
             );
         }
 
-        // App component is a parent of ChatInput & ChatMessages component, now it can share data(two return values) to both component using props.
-        const App = () => { 
-            // Lifting the state up technique
-            const [chatMessages, setChatMessages] = React.useState([        // Initial values
+        
+        const App = () => {             
+            const [chatMessages, setChatMessages] = React.useState([        
                 {
                     message: "hello chatbot",
                     sender: "user",
