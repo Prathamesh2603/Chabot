@@ -12,7 +12,7 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
       
-        function ChatInput() {   //Pascal Case: words first letter is capital. 
+        function ChatInput() {    
             return (   
                 <> 
                     <input /> 
@@ -21,10 +21,24 @@
             );
         }
 
-        function ChatMessage() {
+        function ChatMessage({ message, sender }) { //shortcut of shortcut
+            //const message = props.message;
+            //const sender = props.sender;
+            //shortcut of these two lines:
+            // const { message, sender } = props; 
+
+            if (sender === "robot") {
+                return (
+                    <div>
+                        <img src="robot.jpg" alt="robot" height = "50" />
+                        {message}
+                    </div>
+                );
+            }
+
             return (
                 <div>
-                    hello chatbot
+                    {message}
                     <img src="user.jpg" alt="user" height = "50" />
                 </div>
             );
@@ -34,14 +48,15 @@
             return (
                 <> 
                     <ChatInput />
-                    <ChatMessage />
+                    <ChatMessage message = "hello chatbot" sender="user"/>
+                    <ChatMessage message = "Hello! how can i help you" sender="robot"/>
                 </>
             );
         }
 
         ReactDOM.createRoot(document.querySelector(".root")).render(
-            <App />   // shortcut: React Method(<App></App>).  
-        );            // JS method: App() to call a function.
+            <App />     
+        );            
     </script>
   </body>
 </html>
