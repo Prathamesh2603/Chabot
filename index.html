@@ -12,14 +12,37 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
       
-        function ChatInput() {    
+        function ChatInput({chatMessages, setChatMessages}) {   
+            const [inputText, setInputText] = React.useState(""); // initial value is empty
+
+            function saveInputText(e) {
+                setInputText(e.target.value);  // Taking value and saving it in inputText
+            }
+
+            function sendMessage() {
+                setChatMessages([     
+                    ...chatMessages,   
+                    {                  
+                        message: inputText,  // which contains input value
+                        sender: "user",
+                        id: crypto.randomUUID()  
+                    }
+                ]);
+
+                setInputText("");  // It will empty the state(input) 
+            }
+
             return (   
                 <> 
                     <input 
-                        placeholder="Send message to chatbot" 
-                        size="30"
+                        placeholder = "Send message to chatbot" 
+                        size = "30"
+                        onChange = {saveInputText} // if there any changes in input saveInputText func runs.
+                        value = {inputText}
                     /> 
-                    <button>Send</button>
+                    <button
+                        onClick={sendMessage}
+                    >Send</button>
                 </>
             );
         }
@@ -38,39 +61,10 @@
             );
         }
 
-        function ChatMessages() {
-            // useState function returns an array of two values
-            const array = React.useState([        // Initial values
-                {
-                    message: "hello chatbot",
-                    sender: "user",
-                    id: "id1"
-                },
-                {
-                    message: "Hello! how can i help you",
-                    sender: "robot",
-                    id: "id2"
-                }
-            ]);
-            const chatMessages = array[0]; // 1. Current Value
-            const setChatMessages = array[1]  // 2. Updater function
-
-            function sendMessages() {   
-                // Updater func regenerates the HTML
-                setChatMessages([      // Updater function replacing the chatMessages with this new array
-                    ...chatMessages,   // Copy of initial value
-                    {                  // Adding New value
-                        message: "What is today date",
-                        sender: "user",
-                        id: crypto.randomUUID()  
-                    }
-                ]);
-            }        
-
+        function ChatMessages({chatMessages}) {      
             return (
                 <>
-                    <button onClick={sendMessages}>Send Messages</button>
-                    {chatMessages.map((chatMessage) => {  // basically updater func will re-run this whole code and update the website
+                    {chatMessages.map((chatMessage) => {  
                         return (
                             <ChatMessage 
                                 message = {chatMessage.message} 
@@ -83,11 +77,31 @@
             );
         }
 
-        const App = () => {
+        // App component is a parent of ChatInput & ChatMessages component, now it can share data(two return values) to both component using props.
+        const App = () => { 
+            // Lifting the state up technique
+            const [chatMessages, setChatMessages] = React.useState([        // Initial values
+                {
+                    message: "hello chatbot",
+                    sender: "user",
+                    id: "id1"
+                },
+                {
+                    message: "Hello! how can i help you",
+                    sender: "robot",
+                    id: "id2"
+                }
+            ]);
+
             return (
                 <> 
-                    <ChatInput />
-                    <ChatMessages />
+                    <ChatInput 
+                        chatMessages={chatMessages} 
+                        setChatMessages={setChatMessages} 
+                    />
+                    <ChatMessages
+                        chatMessages={chatMessages} 
+                    />
                 </>
             );
         }
