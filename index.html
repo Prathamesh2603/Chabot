@@ -12,24 +12,36 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
       
-        function ChatInput() {
+        function ChatInput() {   //Pascal Case: words first letter is capital. 
             return (   
-                <>  { /* Fragments */ }
+                <> 
                     <input /> 
                     <button>Send</button>
                 </>
             );
         }
 
+        function ChatMessage() {
+            return (
+                <div>
+                    hello chatbot
+                    <img src="user.jpg" alt="user" height = "50" />
+                </div>
+            );
+        }
+
         const App = () => {
             return (
-                <>  { /* Fragments */ } 
+                <> 
                     <ChatInput />
+                    <ChatMessage />
                 </>
             );
         }
 
-        ReactDOM.createRoot(document.querySelector(".root")).render(<App />);
+        ReactDOM.createRoot(document.querySelector(".root")).render(
+            <App />   // shortcut: React Method(<App></App>).  
+        );            // JS method: App() to call a function.
     </script>
   </body>
 </html>
