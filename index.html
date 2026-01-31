@@ -21,25 +21,23 @@
             );
         }
 
-        function ChatMessage({ message, sender }) { //shortcut of shortcut
-            //const message = props.message;
-            //const sender = props.sender;
-            //shortcut of these two lines:
-            // const { message, sender } = props; 
+        function ChatMessage({ message, sender }) { 
 
-            if (sender === "robot") {
+            /*if (sender === "robot") {
                 return (
                     <div>
                         <img src="robot.jpg" alt="robot" height = "50" />
                         {message}
                     </div>
                 );
-            }
+            }*/
 
             return (
                 <div>
+                    {/* shortcut for if-statement: Guard operator(&&) */}
+                    {sender === "robot" && <img src="robot.jpg" alt="robot" height = "50" />} {/* sender is robot */}
                     {message}
-                    <img src="user.jpg" alt="user" height = "50" />
+                    {sender === "user" && <img src="user.jpg" alt="user" height = "50" />}  {/* sender is user */} 
                 </div>
             );
         }
