@@ -39,7 +39,8 @@
         }
 
         function ChatMessages() {
-            const chatMessages = [
+            // useState function returns an array of two values
+            const array = React.useState([        // Initial values
                 {
                     message: "hello chatbot",
                     sender: "user",
@@ -50,23 +51,26 @@
                     sender: "robot",
                     id: "id2"
                 }
-            ];
+            ]);
+            const chatMessages = array[0]; // 1. Current Value
+            const setChatMessages = array[1]  // 2. Updater function
 
-            function sendMessages() {   // Event Handler function
-                chatMessages.push({
-                    message: "What is today date",
-                    sender: "user",
-                    id: crypto.randomUUID()  // Generates random long number
-                })
-            }
-
-            console.log(chatMessages);
-            
+            function sendMessages() {   
+                // Updater func regenerates the HTML
+                setChatMessages([      // Updater function replacing the chatMessages with this new array
+                    ...chatMessages,   // Copy of initial value
+                    {                  // Adding New value
+                        message: "What is today date",
+                        sender: "user",
+                        id: crypto.randomUUID()  
+                    }
+                ]);
+            }        
 
             return (
                 <>
-                    <button onClick={sendMessages}>Send Messages</button> {/*event handling onClick is camel case*/}
-                    {chatMessages.map((chatMessage) => {
+                    <button onClick={sendMessages}>Send Messages</button>
+                    {chatMessages.map((chatMessage) => {  // basically updater func will re-run this whole code and update the website
                         return (
                             <ChatMessage 
                                 message = {chatMessage.message} 
