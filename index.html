@@ -39,17 +39,28 @@
         }
 
         const App = () => {
+            const chatMessages = [
+                {
+                    message: "hello chatbot",
+                    sender: "user"
+                },
+                {
+                    message: "Hello! how can i help you",
+                    sender: "robot"
+                }
+            ];
+
             return (
                 <> 
                     <ChatInput />
-                    <ChatMessage 
-                        message = "hello chatbot" 
-                        sender="user"
-                    />
-                    <ChatMessage 
-                        message = "Hello! how can i help you" 
-                        sender="robot"
-                    />
+                    {chatMessages.map((chatMessage) => {
+                        return (
+                            <ChatMessage 
+                                message = {chatMessage.message} 
+                                sender = {chatMessage.sender}
+                            />
+                        );
+                    })}
                 </>
             );
         }
