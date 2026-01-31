@@ -38,29 +38,52 @@
             );
         }
 
-        const App = () => {
+        function ChatMessages() {
             const chatMessages = [
                 {
                     message: "hello chatbot",
-                    sender: "user"
+                    sender: "user",
+                    id: "id1"
                 },
                 {
                     message: "Hello! how can i help you",
-                    sender: "robot"
+                    sender: "robot",
+                    id: "id2"
                 }
             ];
 
+            function sendMessages() {   // Event Handler function
+                chatMessages.push({
+                    message: "What is today date",
+                    sender: "user",
+                    id: crypto.randomUUID()  // Generates random long number
+                })
+            }
+
+            console.log(chatMessages);
+            
+
             return (
-                <> 
-                    <ChatInput />
+                <>
+                    <button onClick={sendMessages}>Send Messages</button> {/*event handling onClick is camel case*/}
                     {chatMessages.map((chatMessage) => {
                         return (
                             <ChatMessage 
                                 message = {chatMessage.message} 
                                 sender = {chatMessage.sender}
+                                key = {chatMessage.id} 
                             />
                         );
                     })}
+                </>
+            );
+        }
+
+        const App = () => {
+            return (
+                <> 
+                    <ChatInput />
+                    <ChatMessages />
                 </>
             );
         }
