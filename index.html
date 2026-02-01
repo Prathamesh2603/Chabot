@@ -20,6 +20,17 @@
             border-radius: 10px;
             border-width: 1px;
             font-size: 16px;
+            flex-grow: 1;
+        }
+
+        .chat-input-container {
+            display: flex;
+        }
+
+        .app-container {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
   </head>
@@ -70,7 +81,7 @@
             }
 
             return (   
-                <div> 
+                <div className = "chat-input-container"> 
                     <input 
                         placeholder = "Send message to chatbot" 
                         size = "30"
@@ -132,7 +143,7 @@
             ]);
 
             return (
-                <> 
+                <div className = "app-container"> 
                     <ChatInput 
                         chatMessages={chatMessages} 
                         setChatMessages={setChatMessages} 
@@ -140,7 +151,7 @@
                     <ChatMessages
                         chatMessages={chatMessages} 
                     />
-                </>
+                </div>
             );
         }
 
