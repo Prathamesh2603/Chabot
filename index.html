@@ -95,6 +95,15 @@
                 setInputText(e.target.value);  
             }
 
+            function keyDownHandle(e) {
+                if (e.key === "Escape") {
+                    setInputText("");
+                } 
+                if (e.key === "Enter") {
+                    sendMessage();
+                }
+            }
+
             function sendMessage() {
 
                 const newChatMessages = [  
@@ -127,6 +136,7 @@
                         placeholder = "Send message to chatbot" 
                         size = "30"
                         onChange = {saveInputText} 
+                        onKeyDown = {keyDownHandle}
                         value = {inputText}
                         className = "chat-input"
                     /> 
